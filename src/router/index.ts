@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import IndexPage from '../pages/index.vue'
+import AuthPage from '../pages/Auth.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -8,6 +9,11 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: IndexPage,
+    },
+    {
+      path: '/auth',
+      name: 'auth',
+      component: AuthPage,
     },
     {
       path: '/about',
