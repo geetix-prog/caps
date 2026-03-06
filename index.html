@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link href="/src/assets/main.css" rel="stylesheet" />
+    <title>Caps</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
+
+<style>
+  html::before,
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+      linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-color: var(--color-tertiary);
+    background-size: 75px 75px;
+    pointer-events: none;
+    z-index: -1;
+  }
+</style>
