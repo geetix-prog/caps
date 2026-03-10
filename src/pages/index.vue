@@ -15,7 +15,7 @@ defineOptions({
       <img :src="botImage" alt="" class="w-full z-0" />
     </div>
     <div
-      class="relative w-full flex justify-center md:px-24 overflow-hidden items-center pt-50 animate-float"
+      class="relative w-full flex justify-center md:px-24 overflow-hidden items-center pt-55 animate-float"
     >
       <div class="-rotate-20">
         <img :src="Canette1" alt="Canette" class="w-50 z-24" />
