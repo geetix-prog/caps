@@ -1,15 +1,22 @@
 <script setup lang="ts">
 import Canette1 from '@/assets/canette1.webp'
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
+import { useRoute } from 'vue-router'
 
 const authStore = useAuthStore()
 const router = useRouter()
 
-const { buttonStat, isLoading, authError } = storeToRefs(authStore)
-const { balayage, login, register, clearError } = authStore
+const { isLoading, authError } = storeToRefs(authStore)
+const route = useRoute()
+const buttonStat = ref(route.query.mode !== 'register')
+const { login, register, clearError } = authStore
+
+const balayage = () => {
+  buttonStat.value = !buttonStat.value
+}
 
 const loginForm = reactive({
   identity: '',
@@ -22,13 +29,18 @@ const registerForm = reactive({
   password: '',
   passwordConfirm: '',
 })
+const avatarFile = ref<File | null>(null)
+
+function handleAvatarChange(event: Event) {
+  const target = event.target as HTMLInputElement
+  avatarFile.value = target.files?.[0] ?? null
+  clearError()
+}
 
 async function handleLogin() {
   const isOk = await login(loginForm.identity, loginForm.password)
-
   if (isOk) {
-    router.push('/')
-  }
+    router.push('/').then(() => router.go(0))  }
 }
 
 async function handleRegister() {
@@ -37,11 +49,13 @@ async function handleRegister() {
     registerForm.password,
     registerForm.passwordConfirm,
     registerForm.name,
+    avatarFile.value,
   )
 
   if (isOk) {
-    router.push('/')
-  }
+    window.location.reload()
+    router.push('/').then(() => router.go(0))
+  } 
 }
 </script>
 
@@ -124,6 +138,15 @@ async function handleRegister() {
           />
         </div>
         <div class="label-in flex flex-col gap-2">
+          <label>Avatar</label>
+          <input    
+            class="bg-white rounded-xl w-100 py-1 px-3 text-black"
+            type="file"
+            accept="image/*"
+            @change="handleAvatarChange"
+          />
+        </div>
+        <div class="label-in flex flex-col gap-2">
           <label>Password</label>
           <input
             v-model="registerForm.password"
@@ -151,7 +174,7 @@ async function handleRegister() {
         <button
           type="submit"
           :disabled="isLoading"
-          class="group mx-auto mt-2 flex items-center gap-2 overflow-hidden rounded-2xl bg-primary px-4 py-3 text-lg text-white transition-all duration-200 hover:bg-primary/85 active:scale-95 cursor-pointer"
+          class="group mx-auto mt-2 flex items-center gap-2 overflow-hidden rounded-full bg-primary px-4 py-3 text-lg text-white transition-all duration-200 hover:bg-primary/85 active:scale-95 cursor-pointer"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

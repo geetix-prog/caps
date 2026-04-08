@@ -2,7 +2,7 @@ import PocketBase from 'pocketbase'
 import { ref } from 'vue'
 import type { App } from 'vue'
 
-const pb = new PocketBase(import.meta.env.VITE_POCKETBASE_URL ?? 'http://localhost:8081')
+const pb = new PocketBase(import.meta.env.VITE_POCKETBASE_URL ?? 'http://localhost:8090')
 
 // Persistance via cookie PocketBase natif (déjà géré par le SDK)
 // + refresh au démarrage

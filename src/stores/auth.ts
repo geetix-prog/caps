@@ -1,6 +1,6 @@
 import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
-import { pb } from '@/plugins/pocketbase'
+import { currentUser, pb } from '@/plugins/pocketbase'
 import { useRouter } from 'vue-router'
 
 export const useAuthStore = defineStore('auth', () => {
@@ -47,21 +47,60 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
+  async function updateProfile(data: { username: string; email: string; avatar: File | null; password?: string }) {
+    if (!pb.authStore.record) return
+
+    try {
+      const formData = new FormData()
+      formData.append('name', data.username)
+
+      if (data.email !== pb.authStore.record.email && data.password) {
+        formData.append('email', data.email)
+        formData.append('oldPassword', data.password)
+        formData.append('password', data.password)
+        formData.append('passwordConfirm', data.password)
+      }
+
+      if (data.avatar) {
+        formData.append('avatar', data.avatar)
+      }
+
+      const record = await pb.collection('users').update(pb.authStore.record.id, formData)
+      user.value = record
+    } catch (err: any) {
+      console.log('Erreur PocketBase:', JSON.stringify(err.data))
+      throw err
+    }
+  }
+
   async function register(
     email: string,
     password: string,
     passwordConfirm: string,
     name: string,
+    avatar?: File | null,
   ): Promise<boolean> {
     isLoading.value = true
     authError.value = ''
     try {
-      await pb.collection('users').create({
+      const payload: {
+        email: string
+        password: string
+        passwordConfirm: string
+        name: string
+        avatar?: File
+      } = {
         email: email.trim(),
         password,
         passwordConfirm,
         name: name.trim(),
-      })
+      }
+
+      if (avatar) {
+        payload.avatar = avatar
+      }
+
+      await pb.collection('users').create(payload)
       await pb.collection('users').authWithPassword(email.trim(), password)
       return true
     } catch (error) {
@@ -101,5 +140,7 @@ export const useAuthStore = defineStore('auth', () => {
     register,
     refreshUser,
     logout,
+    updateProfile,
   }
-})
+  })
+

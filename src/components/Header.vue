@@ -2,10 +2,13 @@
 import { storeToRefs } from 'pinia'
 import { RouterLink, useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
+import PlaceHolder from '@/assets/AvatarPlaceholder.svg'
+import { useScrollDirection } from '@/composables/useScrollDirection'
 
 const authStore = useAuthStore()
 const router = useRouter()
 const { isAuthenticated, userName, userAvatar } = storeToRefs(authStore)
+const { isHidden } = useScrollDirection()
 
 function goToLogin() {
   router.push({ path: '/auth', query: { mode: 'login' } })
@@ -18,51 +21,44 @@ function goToRegister() {
 
 <template>
   <header
-    class="absolute top-1/30 z-10 flex items-center justify-around w-full font-montserrat font-medium text-white"
+    class="fixed top-1/30 z-10 flex items-center justify-between px-10 w-full font-montserrat font-medium text-white transition-transform duration-300"
+    :class="isHidden ? '-translate-y-100' : 'translate-y-0'"
   >
-    <div class="w-1/6">
-      <RouterLink to="/">
+    <RouterLink to="/">
+      <img
+        src="/favicon.svg"
+        class="rounded-full w-20 h-20 hover:scale-105 transition-all duration-150 ease"
+        alt="Logo Caps Officiel"
+      />
+    </RouterLink>
+
+    <div v-if="isAuthenticated" class="flex items-center gap-3">
+      <RouterLink to="/profile">
         <img
-          src="/favicon.svg"
-          class="rounded-full hover:shadow-xs shadow-secondary transition-all duration-150 ease"
-          alt="Logo Caps Officiel"
+          v-if="userAvatar"
+          :src="userAvatar"
+          :alt="userName"
+          class="w-20 h-20 rounded-full object-cover p-1 hover:scale-105 transition-all duration-150 ease"
+        />
+        <img
+          v-else
+          :src="PlaceHolder"
+          alt="placeholder"
+          class="w-20 h-20 rounded-full object-cover p-1 hover:scale-105 transition-all duration-150 ease"
         />
       </RouterLink>
     </div>
 
-    <nav>
-      <ul class="flex gap-30 w-1/3 justify-center">
-        <li class="hover:scale-110 hover:text-primary transition-all">
-          <RouterLink to="/programmes">Programmes</RouterLink>
-        </li>
-        <li class="hover:scale-110 hover:text-primary transition-all">
-          <RouterLink to="/redif">Rediffusion</RouterLink>
-        </li>
-        <li class="hover:scale-110 hover:text-primary transition-all">
-          <RouterLink to="/equipe">Notre équipe</RouterLink>
-        </li>
-      </ul>
-    </nav>
-
-    <div v-if="isAuthenticated" class="flex items-center w-1/6 gap-3 justify-end">
-      <img
-        v-if="userAvatar"
-        :src="userAvatar"
-        :alt="userName"
-        class="w-9 h-9 rounded-full object-cover"
-      />
-    </div>
-
-    <div v-else class="flex gap-5 w-1/6 justify-end items-center">
+    <div v-else class="flex gap-5 items-center">
       <button
+        class="bg-white/20 hover:bg-white/30 font-montserratAlt font-bold px-3 py-2 rounded-full hover:scale-105 transition-all duration-100 ease-in-out cursor-pointer"
         @click="goToLogin"
-        class="bg-secondary hover:bg-pink-400 font-montserratAlt font-bold px-3 py-2 rounded-full hover:scale-105 transition-all duration-100 ease-in-out cursor-pointer"
       >
         Connexion
       </button>
       <button
-        @click="goToRegister"
         class="bg-primary hover:bg-purple-900 font-montserratAlt font-bold px-3 py-2 rounded-full hover:scale-105 transition-all duration-100 ease-in-out cursor-pointer"
+        @click="goToRegister"
       >
         Inscription
       </button>

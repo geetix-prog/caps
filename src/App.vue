@@ -1,8 +1,13 @@
 <script setup lang="ts">
+import Footer from './components/Footer.vue'
 import Header from './components/Header.vue'
 import { useTabAttention } from '@/composables/useTabAttention'
+import { useRoute } from 'vue-router'
+import { computed } from 'vue'
 
 const { isAway } = useTabAttention('😢 Reviens stp !')
+const route = useRoute()
+const showFooter = computed(() => route.path !== '/auth')
 </script>
 
 <template>
@@ -23,4 +28,5 @@ const { isAway } = useTabAttention('😢 Reviens stp !')
       <p class="text-sm text-white/50 mt-3">Tu nous manques déjà</p>
     </div>
   </div>
+  <Footer v-if="showFooter" />
 </template>
