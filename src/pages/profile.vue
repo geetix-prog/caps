@@ -50,7 +50,7 @@ async function updateProfile() {
     <form @submit.prevent="updateProfile" class="flex flex-col gap-5 w-full max-w-lg">
 
       <div class="flex flex-col gap-1.5">
-        <label class="text-sm font-semibold text-white/70">Votre Username</label>
+        <label class="text-sm font-semibold text-white/70">Votre nom d'utilisateur</label>
         <input
           v-model="form.username"
           class="bg-white rounded-xl w-full py-2 px-4 text-black focus:outline-none focus:ring-2 focus:ring-primary"

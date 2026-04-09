@@ -88,10 +88,10 @@ async function handleRegister() {
         :class="['flex-col w-full sm:w-1/2 sm:h-screen justify-center sm:space-y-15 items-center px-8 sm:px-4 pb-16 sm:pb-0',
           buttonStat ? 'flex space-y-10' : 'hidden sm:flex']"
       >
-        <h1 class="font-black text-4xl font-montserratAlt">Login</h1>
+        <h1 class="font-black text-4xl font-montserratAlt">Connexion</h1>
         <form class="flex flex-col gap-5 w-full max-w-sm" @submit.prevent="handleLogin">
           <div class="label-in flex flex-col gap-2">
-            <label>Email ou username</label>
+            <label>Email ou nom d'utilisateur</label>
             <input
               v-model="loginForm.identity"
               class="bg-white rounded-xl w-full py-1 px-3 text-black"
@@ -102,7 +102,7 @@ async function handleRegister() {
             />
           </div>
           <div class="label-in flex flex-col gap-2">
-            <label>Password</label>
+            <label>Mot de passe</label>
             <input
               v-model="loginForm.password"
               class="bg-white rounded-xl w-full py-1 px-3 text-black"
@@ -149,10 +149,10 @@ async function handleRegister() {
         :class="['flex-col w-full sm:w-1/2 sm:h-screen justify-center sm:space-y-15 items-center px-8 sm:px-4 pb-16 sm:pb-0',
           !buttonStat ? 'flex space-y-10' : 'hidden sm:flex']"
       >
-        <h1 class="font-black text-4xl font-montserratAlt">Register</h1>
+        <h1 class="font-black text-4xl font-montserratAlt">Inscription</h1>
         <form class="flex flex-col gap-5 w-full max-w-sm" @submit.prevent="handleRegister">
           <div class="label-in flex flex-col gap-2">
-            <label>Username</label>
+            <label>Nom d'utilisateur</label>
             <input
               v-model="registerForm.name"
               class="bg-white rounded-xl w-full py-1 px-3 text-black"
@@ -183,7 +183,7 @@ async function handleRegister() {
             />
           </div>
           <div class="label-in flex flex-col gap-2">
-            <label>Password</label>
+            <label>Mot de passe</label>
             <input
               v-model="registerForm.password"
               class="bg-white rounded-xl w-full py-1 px-3 text-black"
@@ -194,7 +194,7 @@ async function handleRegister() {
             />
           </div>
           <div class="label-in flex flex-col gap-2">
-            <label>Password verif</label>
+            <label>Confirmer le mot de passe</label>
             <input
               v-model="registerForm.passwordConfirm"
               class="bg-white rounded-xl w-full py-1 px-3 text-black"
