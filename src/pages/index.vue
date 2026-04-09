@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import botImage from '@/assets/groupeBot.webp'
 import Canette1 from '@/assets/canette1.webp'
@@ -12,7 +11,6 @@ import { useAuthStore } from '@/stores/auth'
 
 defineOptions({ name: 'IndexPage' })
 
-const router = useRouter()
 const teamStore = useTeamStore()
 const authStore = useAuthStore()
 
@@ -39,7 +37,6 @@ async function handleJoinByCode() {
   if (team) {
     joinSuccess.value = `Vous avez rejoint l'équipe "${team.name}" !`
     inviteCode.value = ''
-    setTimeout(() => router.push(`/equipes/${team.id}`), 1200)
   } else {
     joinError.value = teamStore.error
   }

@@ -68,13 +68,13 @@ async function handleSubmit() {
     <div class="max-w-xl mx-auto">
       <!-- Back link -->
       <RouterLink
-        to="/equipes"
+        to="/"
         class="inline-flex items-center gap-2 text-white/50 hover:text-white transition-colors mb-8 text-sm"
       >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
           <path d="M7.82843 10.9999H20V12.9999H7.82843L13.1924 18.3638L11.7782 19.778L4 11.9999L11.7782 4.22168L13.1924 5.63589L7.82843 10.9999Z"/>
         </svg>
-        Retour aux équipes
+        Retour
       </RouterLink>
 
       <h1 class="text-4xl font-black font-montserratAlt mb-2">Créer une équipe</h1>
