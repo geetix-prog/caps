@@ -63,6 +63,16 @@ const router = createRouter({
         description: 'Découvrez cette équipe sur CAPS, la plateforme des étudiants MMI de Montbéliard.',
       },
     },
+    {
+      path: '/500',
+      component: () => import('@/pages/ServerError.vue'),
+      meta: { title: 'Erreur serveur — CAPS', description: '' },
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      component: () => import('@/pages/NotFound.vue'),
+      meta: { title: 'Page introuvable — CAPS', description: '' },
+    },
   ],
 })
 

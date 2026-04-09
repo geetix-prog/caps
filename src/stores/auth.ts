@@ -29,7 +29,24 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   function getErrorMessage(error: unknown): string {
-    if (error instanceof Error) return error.message
+    if (error && typeof error === 'object' && 'status' in error) {
+      const e = error as any
+      const data = e.data?.data
+      if (data?.passwordConfirm) return 'Les mots de passe ne correspondent pas.'
+      if (data?.password) return 'Le mot de passe doit faire au moins 8 caractères.'
+      if (data?.email?.code === 'validation_not_unique') return 'Cette adresse email est déjà utilisée.'
+      if (data?.email) return 'Adresse email invalide.'
+      if (data?.name?.code === 'validation_not_unique') return 'Ce nom d\'utilisateur est déjà pris.'
+      if (e.status === 400) return 'Email ou mot de passe incorrect.'
+      if (e.status === 401 || e.status === 403) return 'Email ou mot de passe incorrect.'
+      if (e.status === 429) return 'Trop de tentatives. Réessaie dans quelques minutes.'
+      if (e.status >= 500) return 'Erreur serveur. Réessaie plus tard.'
+    }
+    if (error instanceof Error) {
+      if (error.message.includes('Failed to authenticate')) return 'Email ou mot de passe incorrect.'
+      if (error.message.includes('unique') || error.message.includes('already')) return 'Cette adresse email est déjà utilisée.'
+      return error.message
+    }
     return 'Une erreur est survenue.'
   }
 

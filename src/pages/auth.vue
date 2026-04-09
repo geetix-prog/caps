@@ -112,7 +112,12 @@ async function handleRegister() {
               @input="clearError"
             />
           </div>
-          <p v-if="authError && buttonStat" class="text-sm text-red-300">{{ authError }}</p>
+          <div v-if="authError && buttonStat" class="flex items-center gap-2 bg-red-500/20 border border-red-400/40 rounded-xl px-4 py-3 text-red-200 text-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" class="flex-shrink-0">
+              <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11 15V17H13V15H11ZM11 7V13H13V7H11Z"/>
+            </svg>
+            {{ authError }}
+          </div>
           <button
             type="submit"
             :disabled="isLoading"
@@ -199,9 +204,12 @@ async function handleRegister() {
               @input="clearError"
             />
           </div>
-          <p v-if="authError && !buttonStat" class="text-sm text-red-300">
+          <div v-if="authError && !buttonStat" class="flex items-center gap-2 bg-red-500/20 border border-red-400/40 rounded-xl px-4 py-3 text-red-200 text-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" class="flex-shrink-0">
+              <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11 15V17H13V15H11ZM11 7V13H13V7H11Z"/>
+            </svg>
             {{ authError }}
-          </p>
+          </div>
           <button
             type="submit"
             :disabled="isLoading"
