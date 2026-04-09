@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Footer from './components/Footer.vue'
 import Header from './components/Header.vue'
+import SplashScreen from './components/SplashScreen.vue'
 import { useTabAttention } from '@/composables/useTabAttention'
 import { useRoute } from 'vue-router'
 import { computed } from 'vue'
@@ -11,6 +12,7 @@ const showFooter = computed(() => route.path !== '/auth')
 </script>
 
 <template>
+  <SplashScreen />
   <Header />
   <RouterView />
 
