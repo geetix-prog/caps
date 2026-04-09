@@ -89,10 +89,10 @@ const featuresComing = [
 
 <template>
   <!-- Hero -->
-  <div class="h-screen flex flex-col justify-center pt-16 md:block md:pt-0">
+  <div class="relative h-screen flex flex-col justify-center pt-16 md:block md:pt-0">
     <div class="absolute left-0 bottom-0 w-screen">
       <img :src="botImage" alt="" class="w-full z-0" />
-      <div class="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-primary to-transparent" />
+      <div class="absolute bottom-0 left-0 w-full h-24" />
     </div>
     <div
       class="relative w-full flex justify-center md:px-24 overflow-hidden items-center md:pt-55 animate-float"

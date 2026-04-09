@@ -3,10 +3,13 @@ import { ref, onMounted } from 'vue'
 import Canette1 from '@/assets/canette1.webp'
 import Canette2 from '@/assets/canette2.webp'
 
-const visible = ref(true)
+const alreadySeen = sessionStorage.getItem('splashSeen')
+const visible = ref(!alreadySeen)
 const leaving = ref(false)
 
 onMounted(() => {
+  if (alreadySeen) return
+  sessionStorage.setItem('splashSeen', '1')
   setTimeout(() => {
     leaving.value = true
     setTimeout(() => {
