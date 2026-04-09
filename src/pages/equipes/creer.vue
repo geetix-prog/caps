@@ -137,7 +137,7 @@ async function handleSubmit() {
           <span class="text-white/30 text-xs self-end">{{ form.description.length }}/500</span>
         </div>
 
-        <p v-if="error" class="text-red-400 text-sm">{{ error }}</p>
+        <p v-if="error" class="text-red-300 text-sm">{{ error }}</p>
 
         <button
           type="submit"

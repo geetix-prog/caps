@@ -47,7 +47,7 @@ function formatDate(date: string) {
     </div>
 
     <!-- Erreur -->
-    <div v-else-if="error" class="text-red-400 text-center py-8">
+    <div v-else-if="error" class="text-red-300 text-center py-8">
       {{ error }}
     </div>
 

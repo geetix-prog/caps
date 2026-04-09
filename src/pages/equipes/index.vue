@@ -103,10 +103,10 @@ async function handleJoinByCode() {
           <input
             v-model="inviteCode"
             type="text"
-            placeholder="Code d'invitation (ex: ABC12345)"
-            maxlength="8"
+            placeholder="Code d'invitation de l'équipe"
+            maxlength="15"
             class="bg-white rounded-xl flex-1 py-2 px-4 text-black font-mono text-lg uppercase tracking-widest focus:outline-none focus:ring-2 focus:ring-primary"
-            @input="inviteCode = inviteCode.toUpperCase(); joinError = ''; joinSuccess = ''"
+            @input="joinError = ''; joinSuccess = ''"
           />
           <button
             type="submit"
@@ -116,7 +116,7 @@ async function handleJoinByCode() {
             {{ isJoining ? 'Rejoindre...' : 'Rejoindre' }}
           </button>
         </form>
-        <p v-if="joinError" class="text-red-400 text-sm mt-2">{{ joinError }}</p>
+        <p v-if="joinError" class="text-red-300 text-sm mt-2">{{ joinError }}</p>
         <p v-if="joinSuccess" class="text-green-400 text-sm mt-2">{{ joinSuccess }}</p>
       </div>
 
@@ -132,7 +132,7 @@ async function handleJoinByCode() {
           />
         </div>
 
-        <div v-else-if="error" class="text-red-400 text-center py-12">
+        <div v-else-if="error" class="text-red-300 text-center py-12">
           {{ error }}
         </div>
 
@@ -168,7 +168,7 @@ async function handleJoinByCode() {
                   <h3 class="font-bold font-montserratAlt text-lg truncate group-hover:text-white transition-colors">
                     {{ team.name }}
                   </h3>
-                  <span v-if="(team.memberCount ?? 0) < 2" class="text-xs font-bold px-1.5 py-0.5 rounded-full bg-yellow-500/20 text-yellow-400 whitespace-nowrap">
+                  <span v-if="(team.memberCount ?? 0) < 2" class="text-xs font-bold px-1.5 py-0.5 rounded-full bg-yellow-500/30 text-yellow-300 whitespace-nowrap">
                     1/2 joueurs
                   </span>
                 </div>

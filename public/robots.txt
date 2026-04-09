@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /profile
+Disallow: /equipes/creer
+
+Sitemap: https://caps.mathis-guellati.fr/sitemap.xml

@@ -141,7 +141,7 @@ export const useTeamStore = defineStore('team', () => {
       formData.append('name', data.name.trim())
       formData.append('description', data.description.trim())
       formData.append('creator', userId)
-      formData.append('is_public', 'true') // garde la compat si migration pas encore appliquée
+      formData.append('is_public', 'true')
       if (data.logo) formData.append('logo', data.logo)
 
       const team = await pb.collection('teams').create(formData)
@@ -174,7 +174,7 @@ export const useTeamStore = defineStore('team', () => {
       }
 
       const results = await pb.collection('teams').getList(1, 1, {
-        filter: `invite_code = "${code.toUpperCase().trim()}"`,
+        filter: `id = "${code.trim()}"`,
       })
 
       if (results.items.length === 0) {

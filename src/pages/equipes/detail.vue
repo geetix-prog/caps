@@ -72,8 +72,8 @@ async function handleDelete() {
 }
 
 function copyInviteCode() {
-  if (!currentTeam.value?.invite_code) return
-  navigator.clipboard.writeText(currentTeam.value.invite_code)
+  if (!currentTeam.value?.id) return
+  navigator.clipboard.writeText(currentTeam.value.id)
   codeCopied.value = true
   setTimeout(() => (codeCopied.value = false), 2000)
 }
@@ -126,7 +126,7 @@ function copyInviteCode() {
                 <h1 class="text-3xl font-black font-montserratAlt">{{ currentTeam.name }}</h1>
                 <span
                   v-if="memberships.length < 2"
-                  class="text-xs font-bold px-2 py-0.5 rounded-full bg-yellow-500/20 text-yellow-400 border border-yellow-500/20"
+                  class="text-xs font-bold px-2 py-0.5 rounded-full bg-yellow-500/30 text-yellow-300 border border-yellow-500/50"
                 >
                   En attente de joueurs
                 </span>
@@ -155,7 +155,7 @@ function copyInviteCode() {
                 <button
                   v-else
                   :disabled="actionLoading"
-                  class="bg-white/10 hover:bg-red-500/20 hover:text-red-400 font-montserratAlt font-bold px-5 py-2.5 rounded-full transition-all hover:scale-105 active:scale-95 cursor-pointer disabled:opacity-50 border border-white/10 hover:border-red-500/30"
+                  class="bg-white/10 hover:bg-red-500/40 hover:text-red-300 font-montserratAlt font-bold px-5 py-2.5 rounded-full transition-all hover:scale-105 active:scale-95 cursor-pointer disabled:opacity-50 border border-white/10 hover:border-red-500/60"
                   @click="handleLeave"
                 >
                   {{ actionLoading ? 'Chargement...' : 'Quitter' }}
@@ -165,7 +165,7 @@ function copyInviteCode() {
               <template v-if="isCreator">
                 <button
                   v-if="!showDeleteConfirm"
-                  class="bg-red-500/20 hover:bg-red-500/40 text-red-400 font-montserratAlt font-bold px-5 py-2.5 rounded-full transition-all hover:scale-105 cursor-pointer border border-red-500/20"
+                  class="bg-red-500/40 hover:bg-red-500/60 text-red-300 font-montserratAlt font-bold px-5 py-2.5 rounded-full transition-all hover:scale-105 cursor-pointer border border-red-500/50"
                   @click="showDeleteConfirm = true"
                 >
                   Supprimer l'équipe
@@ -202,7 +202,7 @@ function copyInviteCode() {
         <!-- Bandeau équipe invalide -->
         <div
           v-if="memberships.length < 2"
-          class="bg-yellow-500/10 border border-yellow-500/20 rounded-2xl p-4 mb-8 flex items-center gap-3 text-yellow-400"
+          class="bg-yellow-500/20 border border-yellow-500/40 rounded-2xl p-4 mb-8 flex items-center gap-3 text-yellow-300"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" class="flex-shrink-0">
             <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11 15V17H13V15H11ZM11 7V13H13V7H11Z"/>
@@ -226,7 +226,7 @@ function copyInviteCode() {
           </p>
           <div class="flex flex-wrap items-center gap-3">
             <code class="bg-black/30 rounded-xl px-4 py-2 font-mono text-xl sm:text-2xl tracking-widest text-white font-bold">
-              {{ currentTeam.invite_code }}
+              {{ currentTeam.id }}
             </code>
             <button
               class="bg-white/10 hover:bg-white/20 rounded-xl px-4 py-2 text-sm transition-all cursor-pointer flex items-center gap-2"
