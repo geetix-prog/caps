@@ -74,15 +74,15 @@ onMounted(() => {
 }
 
 .splash__logo {
-  width: 80px;
-  height: 80px;
+  width: clamp(50px, 10vw, 80px);
+  height: clamp(50px, 10vw, 80px);
   border-radius: 50%;
 }
 
 .splash__title {
   font-family: 'Montserrat Alternates', sans-serif;
   font-weight: 900;
-  font-size: 80px;
+  font-size: clamp(48px, 12vw, 80px);
   color: white;
   margin: 0;
   line-height: 1;
@@ -90,7 +90,7 @@ onMounted(() => {
 
 /* Canettes */
 .splash__can {
-  width: 120px;
+  width: clamp(60px, 15vw, 120px);
   opacity: 0;
 }
 
