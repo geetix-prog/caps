@@ -89,21 +89,43 @@ const featuresComing = [
 
 <template>
   <!-- Hero -->
-  <div class="h-screen">
+  <div class="h-screen flex flex-col justify-center pt-16 md:block md:pt-0">
     <div class="absolute left-0 bottom-0 w-screen">
       <img :src="botImage" alt="" class="w-full z-0" />
     </div>
     <div
-      class="relative w-full flex justify-center md:px-24 overflow-hidden items-center pt-55 animate-float"
+      class="relative w-full flex justify-center md:px-24 overflow-hidden items-center md:pt-55 animate-float"
     >
       <div class="-rotate-20">
-        <img :src="Canette1" alt="Canette" class="w-50 z-24" />
+        <img :src="Canette1" alt="Canette" class="w-24 sm:w-36 md:w-50 z-24" />
       </div>
-      <h1 class="text-white font-montserratAlt font-black text-[175px] relative z-10 animate-float">
+      <h1 class="text-white font-montserratAlt font-black text-[70px] sm:text-[110px] md:text-[175px] relative z-10 animate-float">
         CAPS
       </h1>
       <div class="rotate-20">
-        <img :src="Canette2" alt="Canette" class="z-0 w-50" />
+        <img :src="Canette2" alt="Canette" class="z-0 w-24 sm:w-36 md:w-50" />
+      </div>
+    </div>
+
+    <!-- Tagline + CTA (surtout utile sur mobile pour remplir le hero) -->
+    <div class="relative z-10 flex flex-col items-center gap-5 mt-6 px-6 text-center md:hidden">
+      <p class="text-white/70 font-montserrat text-sm sm:text-base max-w-xs sm:max-w-sm">
+        Streams · Équipes · Contenus — la plateforme des étudiants MMI de Montbéliard
+      </p>
+      <div class="flex gap-3 flex-wrap justify-center">
+        <a
+          href="#equipes"
+          class="bg-primary hover:bg-primary/80 font-montserratAlt font-bold px-6 py-2.5 rounded-full text-white text-sm transition-all hover:scale-105"
+        >
+          Voir les équipes
+        </a>
+        <RouterLink
+          v-if="!isAuthenticated"
+          to="/auth?mode=register"
+          class="bg-white/15 hover:bg-white/25 font-montserratAlt font-bold px-6 py-2.5 rounded-full text-white text-sm transition-all hover:scale-105"
+        >
+          Rejoindre
+        </RouterLink>
       </div>
     </div>
   </div>

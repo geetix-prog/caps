@@ -42,44 +42,44 @@ async function updateProfile() {
 </script>
 
 <template>
-  <div class="flex flex-col justify-center items-center w-full h-screen font-montserrat text-white gap-8">
-    <h1 class="font-montserratAlt font-bold text-5xl">
+  <div class="flex flex-col justify-center items-center w-full min-h-screen pt-28 sm:pt-0 pb-16 sm:pb-0 px-6 font-montserrat text-white gap-8">
+    <h1 class="font-montserratAlt font-bold text-3xl sm:text-5xl text-center">
       Profil de <span class="capitalize text-primary">{{ userName }}</span>
     </h1>
 
-    <form @submit.prevent="updateProfile" class="flex flex-col gap-4">
-      <div class="flex items-center gap-5">
-        <label class="w-4/10">Votre Username :</label>
+    <form @submit.prevent="updateProfile" class="flex flex-col gap-4 w-full max-w-sm sm:max-w-none">
+      <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-5">
+        <label class="sm:w-4/10">Votre Username :</label>
         <input
           v-model="form.username"
-          class="bg-white rounded-xl w-100 py-1 px-3 text-black"
+          class="bg-white rounded-xl w-full sm:w-100 py-1 px-3 text-black"
         />
       </div>
 
-      <div class="flex items-center gap-5">
-        <label class="w-4/10">Votre Email :</label>
+      <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-5">
+        <label class="sm:w-4/10">Votre Email :</label>
         <input
           v-model="form.email"
           type="email"
-          class="bg-white rounded-xl w-100 py-1 px-3 text-black"
+          class="bg-white rounded-xl w-full sm:w-100 py-1 px-3 text-black"
         />
       </div>
-      <div v-if="form.email !== userEmail" class="flex items-center gap-5">
-        <label class="w-4/10">Mot de passe actuel :</label>
+      <div v-if="form.email !== userEmail" class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-5">
+        <label class="sm:w-4/10">Mot de passe actuel :</label>
         <input
           v-model="form.password"
-          class="bg-white rounded-xl w-100 py-1 px-3 text-black"
+          class="bg-white rounded-xl w-full sm:w-100 py-1 px-3 text-black"
           type="password"
           required
           placeholder="Requis pour changer l'email"
         />
       </div>
 
-      <div class="flex items-center gap-5">
-        <label class="w-4/10">Votre Avatar :</label>
+      <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-5">
+        <label class="sm:w-4/10">Votre Avatar :</label>
         <div class="flex items-center gap-3">
-          <img :src="avatarPreview" class="w-15 h-15 object-cover rounded-full" alt="Votre avatar" />
-          <input type="file" accept="image/*" @change="onAvatarChange" />
+          <img :src="avatarPreview" class="w-15 h-15 object-cover rounded-full flex-shrink-0" alt="Votre avatar" />
+          <input type="file" accept="image/*" @change="onAvatarChange" class="text-sm" />
         </div>
       </div>
 

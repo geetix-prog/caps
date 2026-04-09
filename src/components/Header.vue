@@ -21,13 +21,13 @@ function goToRegister() {
 
 <template>
   <header
-    class="fixed top-1/30 z-10 flex items-center justify-between px-10 w-full font-montserrat font-medium text-white transition-transform duration-300"
+    class="fixed top-1/30 z-10 flex items-center justify-between px-4 sm:px-10 w-full font-montserrat font-medium text-white transition-transform duration-300"
     :class="isHidden ? '-translate-y-100' : 'translate-y-0'"
   >
     <RouterLink to="/">
       <img
         src="/favicon.svg"
-        class="rounded-full w-20 h-20 hover:scale-105 transition-all duration-150 ease"
+        class="rounded-full w-14 h-14 sm:w-20 sm:h-20 hover:scale-105 transition-all duration-150 ease"
         alt="Logo Caps Officiel"
       />
     </RouterLink>
@@ -38,26 +38,26 @@ function goToRegister() {
           v-if="userAvatar"
           :src="userAvatar"
           :alt="userName"
-          class="w-20 h-20 rounded-full object-cover p-1 hover:scale-105 transition-all duration-150 ease"
+          class="w-14 h-14 sm:w-20 sm:h-20 rounded-full object-cover p-1 hover:scale-105 transition-all duration-150 ease"
         />
         <img
           v-else
           :src="PlaceHolder"
           alt="placeholder"
-          class="w-20 h-20 rounded-full object-cover p-1 hover:scale-105 transition-all duration-150 ease"
+          class="w-14 h-14 sm:w-20 sm:h-20 rounded-full object-cover p-1 hover:scale-105 transition-all duration-150 ease"
         />
       </RouterLink>
     </div>
 
-    <div v-else class="flex gap-5 items-center">
+    <div v-else class="flex gap-2 sm:gap-5 items-center">
       <button
-        class="bg-white/20 hover:bg-white/30 font-montserratAlt font-bold px-3 py-2 rounded-full hover:scale-105 transition-all duration-100 ease-in-out cursor-pointer"
+        class="bg-white/20 hover:bg-white/30 font-montserratAlt font-bold px-3 py-2 rounded-full hover:scale-105 transition-all duration-100 ease-in-out cursor-pointer text-sm sm:text-base"
         @click="goToLogin"
       >
         Connexion
       </button>
       <button
-        class="bg-primary hover:bg-purple-900 font-montserratAlt font-bold px-3 py-2 rounded-full hover:scale-105 transition-all duration-100 ease-in-out cursor-pointer"
+        class="bg-primary hover:bg-purple-900 font-montserratAlt font-bold px-3 py-2 rounded-full hover:scale-105 transition-all duration-100 ease-in-out cursor-pointer text-sm sm:text-base"
         @click="goToRegister"
       >
         Inscription

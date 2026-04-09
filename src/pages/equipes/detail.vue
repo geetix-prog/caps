@@ -224,8 +224,8 @@ function copyInviteCode() {
           <p class="text-white/60 text-sm mb-4">
             Partagez ce code pour que des personnes rejoignent votre équipe privée ou directement via la page équipes.
           </p>
-          <div class="flex items-center gap-3">
-            <code class="bg-black/30 rounded-xl px-4 py-2 font-mono text-2xl tracking-widest text-white font-bold">
+          <div class="flex flex-wrap items-center gap-3">
+            <code class="bg-black/30 rounded-xl px-4 py-2 font-mono text-xl sm:text-2xl tracking-widest text-white font-bold">
               {{ currentTeam.invite_code }}
             </code>
             <button
