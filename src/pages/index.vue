@@ -172,7 +172,7 @@ const featuresComing = [
     <div class="max-w-6xl mx-auto">
       <div class="flex flex-col md:flex-row items-start md:items-center justify-between mb-10 gap-6">
         <div>
-          <h2 class="text-4xl font-bold font-montserratAlt mb-3">Équipes pour le tournois</h2>
+          <h2 class="text-4xl font-bold font-montserratAlt mb-3">Équipes pour le tournois du 24 avril 2026</h2>
           <p class="text-white/50">Rejoignez ou créez une équipe pour collaborer avec la communauté CAPS.</p>
         </div>
         <!-- Boutons si pas encore dans une équipe -->
