@@ -59,15 +59,18 @@ onMounted(() => {
         <div class="separator-line h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
       </div>
 
-      <div class="relative flex items-center justify-between w-full text-white/40 text-xs stagger-5">
-        <p>&copy; {{ new Date().getFullYear() }} Caps Officiel — Tous droits réservés</p>
-        <RouterLink
-          to="/mentions-legales"
-          class="absolute left-1/2 -translate-x-1/2 text-white/40 hover:text-white/80 transition-colors underline underline-offset-2"
-        >
-          Mentions légales & Confidentialité
-        </RouterLink>
-        <div class="flex items-center gap-2">
+      <div class="relative flex flex-col md:flex-row space-y-5 items-center justify-between w-full text-white/40 text-xs  ">
+        <p class="hidden md:flex p-0 m-0">&copy; {{ new Date().getFullYear() }} Caps Officiel — Tous droits réservés</p>
+        <div class="items-center">
+          <RouterLink
+            to="/mentions-legales"
+            class="relative md:absolute md:left-1/2 md:-translate-x-1/2 text-white/40 hover:text-white/80 transition-colors underline underline-offset-2"
+          >
+            Mentions légales & Confidentialité
+          </RouterLink>
+        </div>
+        <p class="md:hidden visible">&copy; {{ new Date().getFullYear() }} Caps Officiel — Tous droits réservés</p>
+        <div class="hidden md:flex items-center gap-2">
           <span class="live-dot w-2 h-2 rounded-full bg-red-500"></span>
           <span class="uppercase tracking-widest text-white/60">On Air</span>
         </div>
