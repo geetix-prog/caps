@@ -5,6 +5,14 @@ import { storeToRefs } from 'pinia'
 
 const auth = useAuthStore();
 const { userName, userEmail, userAvatar, isLoading } = storeToRefs(auth);
+const showDeleteConfirm = ref(false)
+const isDeleting = ref(false)
+
+async function handleDeleteAccount() {
+  isDeleting.value = true
+  await auth.deleteAccount()
+  isDeleting.value = false
+}
 
 // Refs locales pour le formulaire
 const form = ref({
@@ -100,5 +108,41 @@ async function updateProfile() {
     <button @click="auth.logout()" class="text-secondary bg-white px-5 py-2 rounded-full font-bold cursor-pointer border-b-4 hover:border-b-6 transition-all ease duration-150">
       {{ isLoading ? 'Déconnexion...' : 'Déconnexion' }}
     </button>
+
+    <!-- Suppression de compte -->
+    <div class="w-full max-w-lg border border-primary/20 rounded-2xl p-6 flex flex-col gap-4">
+      <div>
+        <p class="font-montserratAlt font-bold text-primary">Zone de danger</p>
+        <p class="text-white/50 text-sm mt-1">La suppression de votre compte est irréversible. Toutes vos données seront définitivement effacées.</p>
+      </div>
+
+      <div v-if="!showDeleteConfirm">
+        <button
+          @click="showDeleteConfirm = true"
+          class="text-primary border border-primary/30 hover:bg-red-500/10 px-5 py-2 rounded-full font-bold cursor-pointer transition-all text-sm"
+        >
+          Supprimer mon compte
+        </button>
+      </div>
+
+      <div v-else class="flex flex-col gap-3">
+        <p class="text-red-300 text-sm font-semibold">Es-tu sûr ? Cette action est irréversible.</p>
+        <div class="flex gap-3">
+          <button
+            @click="handleDeleteAccount"
+            :disabled="isDeleting"
+            class="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-full font-bold cursor-pointer transition-all text-sm disabled:opacity-50"
+          >
+            {{ isDeleting ? 'Suppression...' : 'Oui, supprimer définitivement' }}
+          </button>
+          <button
+            @click="showDeleteConfirm = false"
+            class="bg-white/10 hover:bg-white/20 text-white px-5 py-2 rounded-full font-bold cursor-pointer transition-all text-sm"
+          >
+            Annuler
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>

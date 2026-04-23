@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { RouterLink } from 'vue-router'
 import { ref, onMounted } from 'vue'
 
 const isVisible = ref(false)
@@ -58,8 +59,14 @@ onMounted(() => {
         <div class="separator-line h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
       </div>
 
-      <div class="flex items-center justify-between w-full text-white/40 text-xs stagger-5">
+      <div class="relative flex items-center justify-between w-full text-white/40 text-xs stagger-5">
         <p>&copy; {{ new Date().getFullYear() }} Caps Officiel — Tous droits réservés</p>
+        <RouterLink
+          to="/mentions-legales"
+          class="absolute left-1/2 -translate-x-1/2 text-white/40 hover:text-white/80 transition-colors underline underline-offset-2"
+        >
+          Mentions légales & Confidentialité
+        </RouterLink>
         <div class="flex items-center gap-2">
           <span class="live-dot w-2 h-2 rounded-full bg-red-500"></span>
           <span class="uppercase tracking-widest text-white/60">On Air</span>

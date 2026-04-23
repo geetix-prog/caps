@@ -64,6 +64,14 @@ const router = createRouter({
       },
     },
     {
+      path: '/mentions-legales',
+      component: () => import('@/pages/mentions-legales.vue'),
+      meta: {
+        title: 'Mentions légales & Confidentialité — CAPS',
+        description: 'Politique de confidentialité et mentions légales de CAPS, la plateforme streaming étudiante MMI Montbéliard.',
+      },
+    },
+    {
       path: '/500',
       component: () => import('@/pages/ServerError.vue'),
       meta: { title: 'Erreur serveur — CAPS', description: '' },

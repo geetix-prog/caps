@@ -2,7 +2,7 @@
 import Canette1 from '@/assets/canette1.webp'
 import { reactive, ref } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useRouter } from 'vue-router'
+import { RouterLink, useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { useRoute } from 'vue-router'
 
@@ -30,6 +30,7 @@ const registerForm = reactive({
   passwordConfirm: '',
 })
 const avatarFile = ref<File | null>(null)
+const rgpdConsent = ref(false)
 
 function handleAvatarChange(event: Event) {
   const target = event.target as HTMLInputElement
@@ -204,6 +205,32 @@ async function handleRegister() {
               @input="clearError"
             />
           </div>
+          <!-- Consentement RGPD -->
+          <label class="flex items-start gap-3 cursor-pointer group">
+            <div class="relative flex-shrink-0 mt-0.5">
+              <input
+                v-model="rgpdConsent"
+                type="checkbox"
+                class="sr-only"
+              />
+              <div
+                class="w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all duration-150"
+                :class="rgpdConsent ? 'bg-primary border-primary' : 'bg-transparent border-white/40 group-hover:border-white/70'"
+              >
+                <svg v-if="rgpdConsent" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="12" height="12" fill="currentColor" class="text-white">
+                  <path d="M10.0007 15.1709L19.1931 5.97852L20.6073 7.39273L10.0007 17.9993L3.63672 11.6354L5.05093 10.2212L10.0007 15.1709Z"/>
+                </svg>
+              </div>
+            </div>
+            <span class="text-white/60 text-xs leading-relaxed">
+              J'ai lu et j'accepte la
+              <RouterLink to="/mentions-legales" target="_blank" class="text-primary underline underline-offset-2 hover:opacity-80 transition-opacity">
+                politique de confidentialité
+              </RouterLink>.
+              Je consens au traitement de mes données personnelles (nom d'utilisateur, e-mail, avatar optionnel) pour la création de mon compte sur CAPS.
+            </span>
+          </label>
+
           <div v-if="authError && !buttonStat" class="flex items-center gap-2 bg-red-500/20 border border-red-400/40 rounded-xl px-4 py-3 text-red-200 text-sm">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" class="flex-shrink-0">
               <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11 15V17H13V15H11ZM11 7V13H13V7H11Z"/>
@@ -212,7 +239,7 @@ async function handleRegister() {
           </div>
           <button
             type="submit"
-            :disabled="isLoading"
+            :disabled="isLoading || !rgpdConsent"
             class="group mx-auto mt-2 flex items-center gap-2 overflow-hidden rounded-full bg-primary px-4 py-3 text-lg text-white transition-all duration-200 hover:bg-primary/85 active:scale-95 cursor-pointer"
           >
             <svg

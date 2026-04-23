@@ -144,6 +144,18 @@ export const useAuthStore = defineStore('auth', () => {
     router.push('/')
   }
 
+  async function deleteAccount(): Promise<boolean> {
+    if (!pb.authStore.record) return false
+    try {
+      await pb.collection('users').delete(pb.authStore.record.id)
+      pb.authStore.clear()
+      router.push('/')
+      return true
+    } catch {
+      return false
+    }
+  }
+
   return {
     user,
     isLoading,
@@ -158,6 +170,7 @@ export const useAuthStore = defineStore('auth', () => {
     refreshUser,
     logout,
     updateProfile,
+    deleteAccount,
   }
   })
 
