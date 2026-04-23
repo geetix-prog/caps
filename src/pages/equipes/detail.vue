@@ -21,6 +21,13 @@ const actionLoading = ref(false)
 const actionError = ref('')
 const codeCopied = ref(false)
 const showDeleteConfirm = ref(false)
+const showEditForm = ref(false)
+
+const editName = ref('')
+const editDescription = ref('')
+const editLogoFile = ref<File | null>(null)
+const editLogoPreview = ref<string | null>(null)
+const removeLogo = ref(false)
 
 const isCreator = computed(() =>
   isAuthenticated.value && currentTeam.value?.creator === user.value?.id,
@@ -55,6 +62,41 @@ async function handleLeave() {
   if (ok) {
     isMember.value = false
     await teamStore.fetchTeam(currentTeam.value!.id)
+  } else {
+    actionError.value = teamStore.error
+  }
+}
+
+function openEditForm() {
+  editName.value = currentTeam.value?.name ?? ''
+  editDescription.value = currentTeam.value?.description ?? ''
+  editLogoFile.value = null
+  editLogoPreview.value = null
+  removeLogo.value = false
+  showEditForm.value = true
+  showDeleteConfirm.value = false
+}
+
+function onLogoChange(e: Event) {
+  const file = (e.target as HTMLInputElement).files?.[0]
+  if (!file) return
+  editLogoFile.value = file
+  removeLogo.value = false
+  editLogoPreview.value = URL.createObjectURL(file)
+}
+
+async function handleUpdate() {
+  actionError.value = ''
+  actionLoading.value = true
+  const ok = await teamStore.updateTeam(currentTeam.value!.id, {
+    name: editName.value,
+    description: editDescription.value,
+    logo: editLogoFile.value,
+    removeLogo: removeLogo.value,
+  })
+  actionLoading.value = false
+  if (ok) {
+    showEditForm.value = false
   } else {
     actionError.value = teamStore.error
   }
@@ -164,6 +206,12 @@ function copyInviteCode() {
 
               <template v-if="isCreator">
                 <button
+                  class="bg-white/10 hover:bg-white/20 font-montserratAlt font-bold px-5 py-2.5 rounded-full transition-all hover:scale-105 cursor-pointer border border-white/20"
+                  @click="openEditForm"
+                >
+                  Modifier l'équipe
+                </button>
+                <button
                   v-if="!showDeleteConfirm"
                   class="bg-red-500/40 hover:bg-red-500/60 text-red-300 font-montserratAlt font-bold px-5 py-2.5 rounded-full transition-all hover:scale-105 cursor-pointer border border-red-500/50"
                   @click="showDeleteConfirm = true"
@@ -197,6 +245,94 @@ function copyInviteCode() {
           </div>
 
           <p v-if="actionError" class="text-red-400 text-sm mt-4">{{ actionError }}</p>
+        </div>
+
+        <!-- Edit form (creator only) -->
+        <div v-if="isCreator && showEditForm" class="bg-white/5 border border-white/10 rounded-2xl p-8 mb-8">
+          <h2 class="text-xl font-bold font-montserratAlt mb-6">Modifier l'équipe</h2>
+          <form class="space-y-5" @submit.prevent="handleUpdate">
+            <!-- Logo -->
+            <div>
+              <label class="block text-sm font-semibold mb-2 text-white/70">Logo</label>
+              <div class="flex items-center gap-4">
+                <div class="w-16 h-16 rounded-full overflow-hidden bg-primary/20 flex items-center justify-center flex-shrink-0">
+                  <img
+                    v-if="editLogoPreview"
+                    :src="editLogoPreview"
+                    alt="preview"
+                    class="w-full h-full object-cover"
+                  />
+                  <img
+                    v-else-if="currentTeam.logo && !removeLogo"
+                    :src="teamStore.getLogoUrl(currentTeam)"
+                    :alt="currentTeam.name"
+                    class="w-full h-full object-cover"
+                  />
+                  <span v-else class="text-2xl font-black font-montserratAlt text-primary">
+                    {{ currentTeam.name.charAt(0).toUpperCase() }}
+                  </span>
+                </div>
+                <div class="flex flex-col gap-2">
+                  <label class="cursor-pointer bg-white/10 hover:bg-white/20 rounded-xl px-4 py-2 text-sm transition-all inline-block">
+                    Choisir un fichier
+                    <input type="file" accept="image/*" class="hidden" @change="onLogoChange" />
+                  </label>
+                  <button
+                    v-if="currentTeam.logo && !removeLogo"
+                    type="button"
+                    class="text-xs text-red-400 hover:text-red-300 cursor-pointer text-left"
+                    @click="removeLogo = true; editLogoFile = null; editLogoPreview = null"
+                  >
+                    Supprimer le logo
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Name -->
+            <div>
+              <label class="block text-sm font-semibold mb-2 text-white/70">Nom de l'équipe *</label>
+              <input
+                v-model="editName"
+                type="text"
+                required
+                maxlength="50"
+                placeholder="Nom de l'équipe"
+                class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-primary/60 transition-colors"
+              />
+            </div>
+
+            <!-- Description -->
+            <div>
+              <label class="block text-sm font-semibold mb-2 text-white/70">Description</label>
+              <textarea
+                v-model="editDescription"
+                maxlength="500"
+                rows="3"
+                placeholder="Décrivez votre équipe..."
+                class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-primary/60 transition-colors resize-none"
+              />
+            </div>
+
+            <p v-if="actionError" class="text-red-400 text-sm">{{ actionError }}</p>
+
+            <div class="flex gap-3">
+              <button
+                type="submit"
+                :disabled="actionLoading || !editName.trim()"
+                class="bg-primary hover:bg-primary/80 font-montserratAlt font-bold px-6 py-2.5 rounded-full transition-all hover:scale-105 active:scale-95 cursor-pointer disabled:opacity-50"
+              >
+                {{ actionLoading ? 'Sauvegarde...' : 'Sauvegarder' }}
+              </button>
+              <button
+                type="button"
+                class="bg-white/10 hover:bg-white/20 font-montserratAlt font-bold px-6 py-2.5 rounded-full transition-all cursor-pointer"
+                @click="showEditForm = false"
+              >
+                Annuler
+              </button>
+            </div>
+          </form>
         </div>
 
         <!-- Bandeau équipe invalide -->

@@ -263,6 +263,36 @@ export const useTeamStore = defineStore('team', () => {
     }
   }
 
+  async function updateTeam(
+    teamId: string,
+    data: { name: string; description: string; logo?: File | null; removeLogo?: boolean },
+  ): Promise<boolean> {
+    isLoading.value = true
+    error.value = ''
+    try {
+      const formData = new FormData()
+      formData.append('name', data.name.trim())
+      formData.append('description', data.description.trim())
+      if (data.logo) {
+        formData.append('logo', data.logo)
+      } else if (data.removeLogo) {
+        formData.append('logo', '')
+      }
+
+      const updated = await pb.collection('teams').update(teamId, formData)
+      currentTeam.value = updated as unknown as Team
+      if (myTeam.value?.id === teamId) {
+        myTeam.value = updated as unknown as Team
+      }
+      return true
+    } catch (err: any) {
+      error.value = err.message || 'Erreur lors de la modification'
+      return false
+    } finally {
+      isLoading.value = false
+    }
+  }
+
   async function deleteTeam(teamId: string): Promise<boolean> {
     isLoading.value = true
     error.value = ''
@@ -296,6 +326,7 @@ export const useTeamStore = defineStore('team', () => {
     joinTeam,
     leaveTeam,
     checkMembership,
+    updateTeam,
     deleteTeam,
   }
 })
